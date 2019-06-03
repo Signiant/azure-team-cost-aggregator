@@ -1,0 +1,13 @@
+global:
+  smtp:
+    server: "my.smtp.server"
+    port: "587"
+    tls: True
+    user: "smtpauth@mydomain.com"
+    password: "password"
+    to_addr: "to@acme.com"
+    from_addr: "reports@acme.com"
+    cc_addrs:
+      - ""
+      - ""
+    template: "team-aggregation.html"
