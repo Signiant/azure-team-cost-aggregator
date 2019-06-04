@@ -45,7 +45,7 @@ def get_team_totals(config_map, folder, debug):
 
         # Now get the total for this team
         # and save it off so we can sort these later
-        team_costs[team_name] = float("{0:.2f}".format(team_data['cost']))
+        team_costs[team_name] = float("{:.2f}".format(team_data['cost']))
         team_period[team_name] = team_data['start'] + " - " + team_data['end']
 
         # See if we have some previous results so we can show a percent change
@@ -61,7 +61,7 @@ def get_team_totals(config_map, folder, debug):
                 prev_file.close()
 
             # Now get the total for this team
-            team_prev_cost = float("{0:.2f}".format(team_prev_data['cost']))
+            team_prev_cost = float("{:.2f}".format(team_prev_data['cost']))
             if debug:
                 print("Team previous cost is " + str(team_prev_cost))
 
@@ -76,14 +76,13 @@ def get_team_totals(config_map, folder, debug):
     # for key, value in sorted(team_costs.items(), key=lambda (k, v): (v, k), reverse=True):
     for key, value in team_costs.items():
         prev_cost = ""
-        percent_change = ""
         print("Processing costs for " + str(key) + " with current cost " + str(value))
 
         if key in team_prev_costs:
             print("Previous costs found for " + str(key) + " of " + str(team_prev_costs[key]))
             prev_cost = team_prev_costs[key]
             percent_change = (value - prev_cost) / prev_cost * 100
-            percent_change = "{0:.0f}".format(percent_change)
+            percent_change = "{:+.0f}".format(percent_change)
             print("Percentage change for " + str(key) + " is " + str(percent_change))
         else:
             print("No previous costs found for team " + str(key))
@@ -98,6 +97,9 @@ def get_team_totals(config_map, folder, debug):
         total_cost = total_cost + team_costs[team]
         if team in team_prev_costs:
             total_prev_cost = total_prev_cost + team_prev_costs[team]
+
+    total_cost = "{:.2f}".format(total_cost)
+    total_prev_cost = "{:.2f}".format(total_prev_cost)
 
     table = table + "<tr><td style='padding: 10px;'>" + "" + "</td><td style='padding: 10px;'>" + "" + "</td><td style='padding: 10px;border-bottom:1pt solid black;border-top:1pt solid black;'><strong>$" + str(total_cost) + "<td style='padding: 10px;border-bottom:1pt solid black;border-top:1pt solid black;'><strong>$" + str(total_prev_cost) +  "</strong></td></tr>"
     table = table + "</table>"
