@@ -68,13 +68,16 @@ def get_team_totals(config_map, folder, debug):
             # and save it off so we can sort these later
             team_prev_costs[team_name] = team_prev_cost
 
+    # let's sort the team costs, highest cost first
+    team_cost_list = sorted(team_costs.items(), key=lambda x: x[1], reverse=True)
+
     # ok, let's output stuff (email only likes inline styles....)
     table = "<table>"
     table = table + "<tr><th style='padding: 15px;'>Team</th><th style='padding: 15px;'>Period</th><th style='padding: 15px;'>Cost</th><th style='padding: 15px;'>Previous</th><th style='padding: 15px;'>% Change</th></tr>"
 
     # We now have a dict of team costs...let's process it (sorted)
     # for key, value in sorted(team_costs.items(), key=lambda (k, v): (v, k), reverse=True):
-    for key, value in team_costs.items():
+    for key, value in team_cost_list:
         prev_cost = ""
         print("Processing costs for " + str(key) + " with current cost " + str(value))
 
