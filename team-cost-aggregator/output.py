@@ -84,7 +84,10 @@ def get_team_totals(config_map, folder, debug):
         if key in team_prev_costs:
             print("Previous costs found for " + str(key) + " of " + str(team_prev_costs[key]))
             prev_cost = team_prev_costs[key]
-            percent_change = (value - prev_cost) / prev_cost * 100
+            if prev_cost == 0:
+                percent_change = 0
+            else:
+                percent_change = (value - prev_cost) / prev_cost * 100
             percent_change = "{:+.0f}".format(percent_change)
             print("Percentage change for " + str(key) + " is " + str(percent_change))
         else:
