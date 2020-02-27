@@ -21,7 +21,6 @@ def read_config_file(path):
 
 
 def main(argv):
-
     # Add our folder to the system path
     sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -55,7 +54,7 @@ def main(argv):
             else:
                 team_result_fullpath_prev = team_result_fullpath + ".prev"
                 print("Moving " + team_result_fullpath + " to " + team_result_fullpath_prev)
-                os.rename(team_result_fullpath,team_result_fullpath_prev)
+                os.rename(team_result_fullpath, team_result_fullpath_prev)
 
 
 if __name__ == "__main__":

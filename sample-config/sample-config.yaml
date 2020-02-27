@@ -11,3 +11,4 @@ global:
       - ""
       - ""
     template: "team-aggregation.html"
+    subject: "Azure Team Cost Summary for all teams"

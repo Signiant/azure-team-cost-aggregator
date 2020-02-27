@@ -1,6 +1,4 @@
-FROM python:3-alpine
-
-RUN apk --no-cache add ca-certificates
+FROM python:3-slim
 
 RUN mkdir /src
 

@@ -84,7 +84,10 @@ def get_team_totals(config_map, folder, debug):
         if key in team_prev_costs:
             print("Previous costs found for " + str(key) + " of " + str(team_prev_costs[key]))
             prev_cost = team_prev_costs[key]
-            percent_change = (value - prev_cost) / prev_cost * 100
+            if prev_cost == 0:
+                percent_change = 0
+            else:
+                percent_change = (value - prev_cost) / prev_cost * 100
             percent_change = "{:+.0f}".format(percent_change)
             print("Percentage change for " + str(key) + " is " + str(percent_change))
         else:
@@ -122,12 +125,12 @@ def output_results(folder, config_map, debug):
     smtp_from = config_map['global']['smtp']['from_addr']
     smtp_cc = config_map['global']['smtp']['cc_addrs']
     email_template_file = config_map['global']['smtp']['template']
-    email_subject = "Azure Team Cost Summary for all teams"
+    email_subject = config_map['global']['smtp']['subject']
     values = {}
     values['reportGenerationDate'] = datetime.datetime.now().strftime("%Y-%m-%d")
     values['teamCosts'] = str(get_team_totals(config_map, folder, debug))
     template = mail.EmailTemplate(template_name=email_template_file, values=values)
     server = mail.MailServer(server_name=smtp_server, username=smtp_user, password=smtp_pass, port=smtp_port, require_starttls=smtp_tls)
-    msg = mail.MailMessage(from_email=smtp_from, to_emails=[smtp_to], cc_emails=smtp_cc,subject=email_subject,template=template)
+    msg = mail.MailMessage(from_email=smtp_from, to_emails=[smtp_to], cc_emails=smtp_cc,subject=email_subject, template=template)
     print("Sending email to %s" % smtp_to)
     mail.send(mail_msg=msg, mail_server=server)
